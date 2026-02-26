@@ -33,7 +33,7 @@ export default function Header({ showBack }: { showBack?: boolean }) {
             </>
           )}
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center gap-3">
           <Button
             variant="ghost"
             size="sm"
@@ -43,6 +43,13 @@ export default function Header({ showBack }: { showBack?: boolean }) {
             <HelpCircle className="h-4 w-4" />
             <span className="hidden sm:inline">Справка</span>
           </Button>
+          <Separator orientation="vertical" className="h-6" />
+          <Link
+            href="/profile"
+            className="hidden sm:inline-block text-sm text-muted-foreground border rounded-md px-3 py-1 hover:bg-muted transition-colors cursor-pointer"
+          >
+            ООО &quot;ГигаСтрой&quot;
+          </Link>
         </div>
       </div>
     </header>
