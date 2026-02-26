@@ -72,6 +72,22 @@ export interface DocumentTemplate {
   filename: string;
 }
 
+export interface WorkingHoursEntry {
+  days: string;
+  hours: string;
+}
+
+export interface EventAccreditationInfo {
+  centerName: string;
+  location: string;
+  workingHours: WorkingHoursEntry[];
+  requirements: string[];
+  badgeData: string;
+  whoCanReceive: string[];
+  parking: string[];
+  documents: DocumentTemplate[];
+}
+
 // ─── Events ──────────────────────────────────────────────
 
 export const mockEvents: Event[] = [
@@ -212,12 +228,12 @@ export const mockHelpArticles: HelpArticle[] = [
   {
     question: "Режим работы центра аккредитации",
     answer:
-      "Центр аккредитации работает ежедневно с 9:00 до 18:00 (МСК) в период подготовки и проведения мероприятий. Адрес: Ленинградская обл., Приозерский р-н, пос. Огоньки, территория автодрома «Игора Драйв». Телефон: +7 (812) 600-00-00. Email: accreditation@igoradrive.com",
+      "Информация о центре аккредитации доступна на странице каждого мероприятия — место, режим работы и парковка указаны индивидуально для каждого события.",
   },
   {
     question: "Как заказать предпечать бейджей в центре аккредитации?",
     answer:
-      "Для заказа предпечати бейджей необходимо подать заявку не позднее чем за 5 рабочих дней до начала мероприятия. Отправьте список сотрудников (ФИО, должность, тип аккредитации) на email: print@igoradrive.com с темой письма «Предпечать — [Название мероприятия]». Готовые бейджи можно забрать в центре аккредитации в день мероприятия.",
+      "Для заказа предпечати бейджей необходимо подать заявку не позднее чем за 5 рабочих дней до начала мероприятия. Отправьте список сотрудников (ФИО, должность, тип аккредитации) на email: v.mikhailova@drive-igora.ru с темой письма «Предпечать — [Название мероприятия]». Готовые бейджи можно забрать в центре аккредитации в день мероприятия.",
   },
   {
     question: "Как получить доверенность на получение бейджей за других лиц?",
@@ -237,7 +253,7 @@ export const mockHelpArticles: HelpArticle[] = [
   {
     question: "Как связаться с куратором?",
     answer:
-      "Ваш куратор — Иванова Мария Александровна. Телефон: +7 (812) 600-00-01. Email: curator@igoradrive.com. Время работы: Пн–Пт, 9:00–18:00 (МСК).",
+      "Ваш куратор — Иванова Мария Александровна. Телефон: +7 (812) 600-00-01. Email: v.mikhailova@drive-igora.ru. Время работы: Пн–Пт, 9:00–18:00 (МСК).",
   },
 ];
 
@@ -249,6 +265,70 @@ export const mockDocuments: DocumentTemplate[] = [
   },
 ];
 
+// ─── Event Accreditation Info ────────────────────────────
+
+const eventAccreditationInfo: Record<string, EventAccreditationInfo> = {
+  "2": {
+    centerName: "Центр аккредитации GARAGE FEST 2026",
+    location: "Ледовый дворец, курорт «Игора»",
+    workingHours: [
+      { days: "13 июля Понедельник – Среда", hours: "10:00 – 18:00" },
+      { days: "Четверг – Пятница", hours: "09:00 – 20:00" },
+      { days: "18 июля Суббота", hours: "09:00 – 18:00" },
+      { days: "19 июля Воскресенье", hours: "09:00 – 16:00" },
+    ],
+    requirements: [
+      "Предъявить паспорт",
+      "Быть в списке утверждённых участников",
+    ],
+    badgeData: "ФИО / год рождения / команда / должность / уникальный QR-код",
+    whoCanReceive: [
+      "Лично аккредитуемый участник (при предъявлении паспорта)",
+      "Менеджер команды (при получении на всю группу)",
+    ],
+    parking: [
+      "Парковка у Ледового дворца — бесплатна только на 30 минут",
+      "Если вы планируете остаться дольше, используйте парковку при въезде на курорт",
+    ],
+    documents: [
+      {
+        name: "Схема парковок",
+        description: "Схема расположения парковок на территории курорта «Игора»",
+        filename: "parking_scheme_garagefest2026.pdf",
+      },
+    ],
+  },
+  "3": {
+    centerName: "Центр аккредитации «Мото Драйв» 2026",
+    location: "Ледовый дворец, курорт «Игора»",
+    workingHours: [
+      { days: "5 июня Четверг", hours: "10:00 – 18:00" },
+      { days: "6 июня Пятница", hours: "09:00 – 20:00" },
+      { days: "7 июня Суббота", hours: "09:00 – 16:00" },
+    ],
+    requirements: [
+      "Предъявить паспорт",
+      "Быть в списке утверждённых участников",
+    ],
+    badgeData: "ФИО / год рождения / команда / должность / уникальный QR-код",
+    whoCanReceive: [
+      "Лично аккредитуемый участник (при предъявлении паспорта)",
+      "Менеджер команды (при получении на всю группу)",
+    ],
+    parking: [
+      "Парковка у Ледового дворца — бесплатна только на 30 минут",
+      "Если вы планируете остаться дольше, используйте парковку при въезде на курорт",
+    ],
+    documents: [
+      {
+        name: "Схема парковок",
+        description: "Схема расположения парковок на территории курорта «Игора»",
+        filename: "parking_scheme_motodrive2026.pdf",
+      },
+    ],
+  },
+};
+
 // ─── Helpers ─────────────────────────────────────────────
 
 export function getEventById(id: string): Event | undefined {
@@ -257,4 +337,8 @@ export function getEventById(id: string): Event | undefined {
 
 export function getApplicationsByEventId(eventId: string): Application[] {
   return mockApplications.filter((a) => a.eventId === eventId);
+}
+
+export function getEventAccreditationInfo(eventId: string): EventAccreditationInfo | undefined {
+  return eventAccreditationInfo[eventId];
 }
