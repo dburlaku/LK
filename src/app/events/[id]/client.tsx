@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { Calendar, Plus, Search, ArrowUpDown, Car } from "lucide-react";
+import { Calendar, Plus, Search, ArrowUpDown, Car, AlertTriangle } from "lucide-react";
 import Header from "@/components/header";
 import SubmitApplicationDialog, { type NewApplicationData } from "@/components/submit-application-dialog";
 import ApplicationDetailDialog from "@/components/application-detail-dialog";
@@ -35,6 +35,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   getEventById,
   getApplicationsByEventId,
   type Application,
@@ -51,6 +57,10 @@ function statusBadgeStyle(status: string) {
       return "bg-muted text-foreground border-transparent";
     case "Заявка отправлена":
       return "bg-green-50 text-green-700 border-green-200";
+    case "Заявка отправлена на согласование":
+      return "bg-blue-50 text-blue-700 border-blue-200";
+    case "Отклонена":
+      return "bg-orange-50 text-orange-700 border-orange-200";
     case "Отозвана":
       return "bg-red-50 text-red-700 border-red-200";
     default:
@@ -95,6 +105,39 @@ export default function EventDetailClient({ id }: { id: string }) {
         statusHistory: [{ status: "Заявка отправлена", date: dateStr }],
       }));
       setApplications((prev) => [...created, ...prev]);
+    },
+    [id]
+  );
+
+  const handleUpdateApplication = useCallback((updated: Application) => {
+    setApplications((prev) =>
+      prev.map((a) => (a.id === updated.id ? updated : a))
+    );
+    setDetailApp(null);
+  }, []);
+
+  const handleResubmit = useCallback(
+    (appData: NewApplicationData) => {
+      const now = new Date();
+      const dateStr = now.toLocaleString("ru-RU");
+      const newApp: Application = {
+        id: `resub-${Date.now()}`,
+        eventId: id,
+        fullName: appData.fullName,
+        position: appData.position,
+        type: appData.type,
+        status: "Заявка отправлена",
+        submittedAt: dateStr,
+        updatedAt: dateStr,
+        vehiclePass: appData.vehicle?.plate ?? null,
+        passport: appData.passport,
+        phone: appData.phone,
+        email: appData.email,
+        vehicle: appData.vehicle,
+        statusHistory: [{ status: "Заявка отправлена", date: dateStr }],
+      };
+      setApplications((prev) => [newApp, ...prev]);
+      setDetailApp(null);
     },
     [id]
   );
@@ -238,14 +281,16 @@ export default function EventDetailClient({ id }: { id: string }) {
               />
             </div>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-48">
+              <SelectTrigger className="w-52">
                 <SelectValue placeholder="Все статусы" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Все статусы</SelectItem>
-                <SelectItem value="Заявка отправлена">Заявка отправлена</SelectItem>
-                <SelectItem value="Заявка согласована">Заявка согласована</SelectItem>
+                <SelectItem value="Заявка отправлена">Отправлена</SelectItem>
+                <SelectItem value="Заявка отправлена на согласование">На согласовании</SelectItem>
+                <SelectItem value="Заявка согласована">Согласована</SelectItem>
                 <SelectItem value="Аккредитация выдана">Аккредитация выд.</SelectItem>
+                <SelectItem value="Отклонена">Отклонена</SelectItem>
                 <SelectItem value="Отозвана">Отозвана</SelectItem>
               </SelectContent>
             </Select>
@@ -268,12 +313,7 @@ export default function EventDetailClient({ id }: { id: string }) {
               <TableHeader>
                 <TableRow>
                   <TableHead>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="-ml-3 gap-1"
-                      onClick={() => toggleSort("fullName")}
-                    >
+                    <Button variant="ghost" size="sm" className="-ml-3 gap-1" onClick={() => toggleSort("fullName")}>
                       ФИО
                       <ArrowUpDown className="h-3.5 w-3.5" />
                     </Button>
@@ -281,23 +321,13 @@ export default function EventDetailClient({ id }: { id: string }) {
                   <TableHead>Тип</TableHead>
                   <TableHead>Статус</TableHead>
                   <TableHead>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="-ml-3 gap-1"
-                      onClick={() => toggleSort("submittedAt")}
-                    >
+                    <Button variant="ghost" size="sm" className="-ml-3 gap-1" onClick={() => toggleSort("submittedAt")}>
                       Дата подачи
                       <ArrowUpDown className="h-3.5 w-3.5" />
                     </Button>
                   </TableHead>
                   <TableHead>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="-ml-3 gap-1"
-                      onClick={() => toggleSort("updatedAt")}
-                    >
+                    <Button variant="ghost" size="sm" className="-ml-3 gap-1" onClick={() => toggleSort("updatedAt")}>
                       Дата изменения
                       <ArrowUpDown className="h-3.5 w-3.5" />
                     </Button>
@@ -330,12 +360,23 @@ export default function EventDetailClient({ id }: { id: string }) {
                       </TableCell>
                       <TableCell className="text-sm">{app.type}</TableCell>
                       <TableCell>
-                        <Badge
-                          variant="outline"
-                          className={statusBadgeStyle(app.status)}
-                        >
-                          {app.status}
-                        </Badge>
+                        <div className="flex items-center gap-1.5">
+                          <Badge variant="outline" className={statusBadgeStyle(app.status)}>
+                            {app.status}
+                          </Badge>
+                          {app.status === "Отклонена" && app.rejectionReason && (
+                            <TooltipProvider delayDuration={200}>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <AlertTriangle className="h-4 w-4 text-orange-500 cursor-help" />
+                                </TooltipTrigger>
+                                <TooltipContent side="top" className="max-w-xs">
+                                  <p className="text-xs">{app.rejectionReason}</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          )}
+                        </div>
                       </TableCell>
                       <TableCell className="text-sm">{app.submittedAt}</TableCell>
                       <TableCell className="text-sm">{app.updatedAt}</TableCell>
@@ -351,6 +392,7 @@ export default function EventDetailClient({ id }: { id: string }) {
                       </TableCell>
                       <TableCell className="text-right">
                         {(app.status === "Заявка отправлена" ||
+                          app.status === "Заявка отправлена на согласование" ||
                           app.status === "Заявка согласована") && (
                           <Button
                             variant="ghost"
@@ -389,6 +431,9 @@ export default function EventDetailClient({ id }: { id: string }) {
         onOpenChange={(open) => {
           if (!open) setDetailApp(null);
         }}
+        onUpdate={handleUpdateApplication}
+        onResubmit={handleResubmit}
+        quotas={event.quotas}
       />
 
       {/* Revoke confirmation */}

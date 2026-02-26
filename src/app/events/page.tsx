@@ -50,7 +50,7 @@ function EventCard({ event }: { event: Event }) {
         <div className="mt-4">
           <Button asChild variant={isPast ? "outline" : "default"}>
             <Link href={`/events/${event.id}`}>
-              {isPast ? "Посмотреть archived заявки" : "Перейти к заявкам"}
+              {isPast ? "Посмотреть заявки" : "Перейти к заявкам"}
               <ArrowRight className="ml-1.5 h-4 w-4" />
             </Link>
           </Button>
