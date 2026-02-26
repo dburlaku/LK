@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Calendar, Plus, Search, ArrowUpDown, Car } from "lucide-react";
 import Header from "@/components/header";
-import SubmitApplicationDialog from "@/components/submit-application-dialog";
+import SubmitApplicationDialog, { type NewApplicationData } from "@/components/submit-application-dialog";
 import ApplicationDetailDialog from "@/components/application-detail-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -60,7 +60,9 @@ function statusBadgeStyle(status: string) {
 
 export default function EventDetailClient({ id }: { id: string }) {
   const event = getEventById(id);
-  const allApplications = getApplicationsByEventId(id);
+  const [applications, setApplications] = useState<Application[]>(() =>
+    getApplicationsByEventId(id)
+  );
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -72,6 +74,49 @@ export default function EventDetailClient({ id }: { id: string }) {
   const [detailApp, setDetailApp] = useState<Application | null>(null);
   const [revokeApp, setRevokeApp] = useState<Application | null>(null);
 
+  const handleNewApplications = useCallback(
+    (newApps: NewApplicationData[]) => {
+      const now = new Date();
+      const dateStr = `${String(now.getDate()).padStart(2, "0")}.${String(now.getMonth() + 1).padStart(2, "0")}.${now.getFullYear()} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+      const created: Application[] = newApps.map((app, i) => ({
+        id: `new-${Date.now()}-${i}`,
+        eventId: id,
+        fullName: app.fullName,
+        position: app.position,
+        type: app.type,
+        status: "Заявка отправлена" as const,
+        submittedAt: dateStr,
+        updatedAt: dateStr,
+        vehiclePass: app.vehicle?.plate ?? null,
+        passport: app.passport,
+        phone: app.phone,
+        email: app.email,
+        vehicle: app.vehicle,
+        statusHistory: [{ status: "Заявка отправлена", date: dateStr }],
+      }));
+      setApplications((prev) => [...created, ...prev]);
+    },
+    [id]
+  );
+
+  const handleRevoke = useCallback((appId: string) => {
+    setApplications((prev) =>
+      prev.map((a) =>
+        a.id === appId
+          ? {
+              ...a,
+              status: "Отозвана" as const,
+              updatedAt: new Date().toLocaleDateString("ru-RU"),
+              statusHistory: [
+                { status: "Отозвана", date: new Date().toLocaleString("ru-RU") },
+                ...a.statusHistory,
+              ],
+            }
+          : a
+      )
+    );
+  }, []);
+
   const toggleSort = (key: SortKey) => {
     if (sortKey === key) {
       setSortDir((d) => (d === "asc" ? "desc" : "asc"));
@@ -82,7 +127,7 @@ export default function EventDetailClient({ id }: { id: string }) {
   };
 
   const filtered = useMemo(() => {
-    let list = [...allApplications];
+    let list = [...applications];
 
     if (search) {
       const q = search.toLowerCase();
@@ -110,7 +155,7 @@ export default function EventDetailClient({ id }: { id: string }) {
     });
 
     return list;
-  }, [allApplications, search, statusFilter, typeFilter, sortKey, sortDir]);
+  }, [applications, search, statusFilter, typeFilter, sortKey, sortDir]);
 
   if (!event) {
     return (
@@ -334,6 +379,7 @@ export default function EventDetailClient({ id }: { id: string }) {
         open={submitOpen}
         onOpenChange={setSubmitOpen}
         quotas={event.quotas}
+        onSubmit={handleNewApplications}
       />
 
       {/* Application detail dialog */}
@@ -367,7 +413,10 @@ export default function EventDetailClient({ id }: { id: string }) {
             <AlertDialogCancel>Отмена</AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-white hover:bg-destructive/90"
-              onClick={() => setRevokeApp(null)}
+              onClick={() => {
+                if (revokeApp) handleRevoke(revokeApp.id);
+                setRevokeApp(null);
+              }}
             >
               Отозвать заявку
             </AlertDialogAction>
