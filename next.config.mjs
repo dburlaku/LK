@@ -1,26 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+
   // Performance optimizations
   env: {
     NEXT_TELEMETRY_DISABLED: "1",
     SWC_CACHE: "1",
     WEBPACK_CACHE: "memory",
-  },
-  async rewrites() {
-    return [{ source: "/public/:path*", destination: "/:path*" }];
-  },
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          {
-            key: "Content-Security-Policy",
-            value: "frame-ancestors *;",
-          },
-        ],
-      },
-    ];
   },
   typescript: {
     ignoreBuildErrors: true,
@@ -28,7 +14,6 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  distDir: ".next",
   trailingSlash: true,
 
   // --- ВАЖНЫЕ ПРАВКИ ДЛЯ ОБЛАКА ---
@@ -61,7 +46,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    remotePatterns: [],
+    unoptimized: true,
   },
 };
 
