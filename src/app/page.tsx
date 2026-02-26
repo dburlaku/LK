@@ -157,7 +157,7 @@ function BannerPlaceholder() {
         fontFamily="sans-serif"
         fontWeight="500"
       >
-        2025 &bull; САНКТ-ПЕТЕРБУРГ
+        2026 &bull; САНКТ-ПЕТЕРБУРГ
       </text>
 
       {/* Bottom accent line */}
