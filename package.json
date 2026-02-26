@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "next start",
+    "start": "npx serve out",
     "format": "npm exec prettier --write . --ignore-unknown",
     "build": "next build",
     "dev": "next dev"
