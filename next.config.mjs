@@ -12,17 +12,12 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Apply to all pages in the app
         source: "/:path*",
         headers: [
           {
             key: "Content-Security-Policy",
-            // Allow any site to embed this page in an <iframe>
             value: "frame-ancestors *;",
           },
-          // NOTE: X-Frame-Options is legacy and does not support a wildcard;
-          // if your platform injects X-Frame-Options: SAMEORIGIN you may need
-          // to remove/override it via platform settings.
         ],
       },
     ];
@@ -35,11 +30,19 @@ const nextConfig = {
   },
   distDir: ".next",
   trailingSlash: true,
-  // Build optimization
+
+  // --- ВАЖНЫЕ ПРАВКИ ДЛЯ ОБЛАКА ---
   experimental: {
-    // Modern experimental features for Next.js 15
+    // Разрешаем домен GigaIDE для обхода ошибок Cross-Origin
+    allowedDevOrigins: [
+      'gigaide-0e22c254-4f36-47fb-9636-7fa6b84aba21-65535.containerapps.ru'
+    ],
   },
-  // Cache optimization
+  devIndicators: {
+    appIsrStatus: false, // Отключаем индикаторы, которые могут тормозить прокси
+  },
+  // -------------------------------
+
   onDemandEntries: {
     maxInactiveAge: 60 * 1000,
     pagesBufferLength: 2,
@@ -58,7 +61,6 @@ const nextConfig = {
     return config;
   },
   images: {
-    // Disable remote patterns
     remotePatterns: [],
   },
 };
