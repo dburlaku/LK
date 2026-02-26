@@ -92,14 +92,14 @@ export interface EventAccreditationInfo {
 
 export const mockEvents: Event[] = [
   {
-    id: "1",
-    name: "GARAGE FEST Игора Драйв 2025",
-    date: "2025",
-    status: "Прошедшее",
+    id: "3",
+    name: 'Фестиваль «Мото Драйв» 2026',
+    date: "6–7 июня 2026",
+    status: "Актуальное",
     quotas: [
-      { type: "Организатор", current: 5, max: 5 },
-      { type: "Технический персонал", current: 10, max: 10 },
-      { type: "Пресса", current: 3, max: 5 },
+      { type: "Организатор", current: 1, max: 4 },
+      { type: "Технический персонал", current: 5, max: 15 },
+      { type: "Пресса", current: 0, max: 8 },
     ],
   },
   {
@@ -114,14 +114,14 @@ export const mockEvents: Event[] = [
     ],
   },
   {
-    id: "3",
-    name: 'Фестиваль «Мото Драйв» 2026',
-    date: "6–7 июня 2026",
-    status: "Актуальное",
+    id: "1",
+    name: "GARAGE FEST Игора Драйв 2025",
+    date: "2025",
+    status: "Прошедшее",
     quotas: [
-      { type: "Организатор", current: 1, max: 4 },
-      { type: "Технический персонал", current: 5, max: 15 },
-      { type: "Пресса", current: 0, max: 8 },
+      { type: "Организатор", current: 5, max: 5 },
+      { type: "Технический персонал", current: 10, max: 10 },
+      { type: "Пресса", current: 3, max: 5 },
     ],
   },
 ];

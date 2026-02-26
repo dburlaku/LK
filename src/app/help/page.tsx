@@ -1,6 +1,7 @@
 "use client";
 
-import { Phone, Mail, User, FileDown } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Phone, Mail, User, FileDown, ArrowLeft } from "lucide-react";
 import Header from "@/components/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,11 +15,19 @@ import {
 import { mockHelpArticles, mockDocuments } from "@/lib/mock-data";
 
 export default function HelpPage() {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main className="container max-w-3xl px-4 py-8 md:px-6">
-        <h1 className="mb-6 text-3xl font-bold">Справка</h1>
+        <div className="mb-6 flex items-center gap-4">
+          <Button variant="outline" size="sm" onClick={() => router.back()}>
+            <ArrowLeft className="mr-1.5 h-4 w-4" />
+            Назад
+          </Button>
+          <h1 className="text-3xl font-bold">Справка</h1>
+        </div>
 
         {/* Curator Contact */}
         <Card className="mb-6 border-blue-200 bg-blue-50/50">
