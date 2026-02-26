@@ -247,16 +247,6 @@ export const mockDocuments: DocumentTemplate[] = [
     description: "Шаблон доверенности для получения бейджей аккредитации за других лиц",
     filename: "doverennost_badge.docx",
   },
-  {
-    name: "Бланк заявления на аккредитацию",
-    description: "Типовой бланк заявления для подачи заявки на аккредитацию",
-    filename: "zayavlenie_accreditation.docx",
-  },
-  {
-    name: "Заявка на предпечать бейджей",
-    description: "Форма заявки для заказа предпечати бейджей в центре аккредитации",
-    filename: "zayavka_preprint.xlsx",
-  },
 ];
 
 // ─── Helpers ─────────────────────────────────────────────

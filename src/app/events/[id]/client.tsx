@@ -218,23 +218,41 @@ export default function EventDetailClient({ id }: { id: string }) {
       <main className="container max-w-6xl px-4 py-8 md:px-6">
         {/* Event header */}
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold">{event.name}</h1>
-            <div className="mt-1 flex items-center gap-3">
-              <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                <Calendar className="h-4 w-4" />
-                {event.date}
-              </span>
-              <Badge
-                variant="outline"
-                className={
-                  event.status === "Актуальное"
-                    ? "border-green-200 bg-green-50 text-green-700"
-                    : ""
-                }
-              >
-                {event.status}
-              </Badge>
+          <div className="flex items-start gap-4">
+            {/* Event logo placeholder */}
+            <div className="shrink-0 h-16 w-16 rounded-lg border bg-muted flex items-center justify-center">
+              <svg viewBox="0 0 48 48" className="h-10 w-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="8" width="8" height="8" rx="1" fill="currentColor" opacity="0.2" />
+                <rect x="12" y="8" width="8" height="8" rx="1" fill="currentColor" opacity="0.4" />
+                <rect x="20" y="8" width="8" height="8" rx="1" fill="currentColor" opacity="0.2" />
+                <rect x="4" y="16" width="8" height="8" rx="1" fill="currentColor" opacity="0.4" />
+                <rect x="12" y="16" width="8" height="8" rx="1" fill="currentColor" opacity="0.2" />
+                <rect x="20" y="16" width="8" height="8" rx="1" fill="currentColor" opacity="0.4" />
+                <rect x="4" y="24" width="8" height="8" rx="1" fill="currentColor" opacity="0.2" />
+                <rect x="12" y="24" width="8" height="8" rx="1" fill="currentColor" opacity="0.4" />
+                <rect x="20" y="24" width="8" height="8" rx="1" fill="currentColor" opacity="0.2" />
+                <path d="M34 12L42 20L34 28" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
+                <text x="16" y="42" textAnchor="middle" fill="currentColor" fontSize="7" fontFamily="sans-serif" fontWeight="700" opacity="0.4">LOGO</text>
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold">{event.name}</h1>
+              <div className="mt-1 flex items-center gap-3">
+                <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                  <Calendar className="h-4 w-4" />
+                  {event.date}
+                </span>
+                <Badge
+                  variant="outline"
+                  className={
+                    event.status === "Актуальное"
+                      ? "border-green-200 bg-green-50 text-green-700"
+                      : ""
+                  }
+                >
+                  {event.status}
+                </Badge>
+              </div>
             </div>
           </div>
           {event.status === "Актуальное" && (

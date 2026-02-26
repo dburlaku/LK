@@ -145,13 +145,13 @@ export default function HelpPage() {
               <p className="text-sm font-medium mb-1">Заказ предпечати бейджей</p>
               <p className="text-sm text-muted-foreground mb-3">
                 Для заказа предпечати отправьте список сотрудников на email:{" "}
-                <span className="font-medium text-foreground">print@igoradrive.com</span>{" "}
+                <span className="font-medium text-foreground">v.mikhailova@drive-igora.ru</span>{" "}
                 с темой письма «Предпечать — [Название мероприятия]» не позднее чем за 5 рабочих дней до начала мероприятия.
               </p>
               <Button variant="outline" size="sm" asChild>
-                <a href="mailto:print@igoradrive.com?subject=Предпечать">
+                <a href="mailto:v.mikhailova@drive-igora.ru?subject=Предпечать">
                   <Mail className="mr-1.5 h-4 w-4" />
-                  Написать на print@igoradrive.com
+                  Написать на v.mikhailova@drive-igora.ru
                 </a>
               </Button>
             </div>

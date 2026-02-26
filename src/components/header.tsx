@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, LogOut, HelpCircle } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ArrowLeft, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
@@ -34,7 +33,7 @@ export default function Header({ showBack }: { showBack?: boolean }) {
             </>
           )}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center">
           <Button
             variant="ghost"
             size="sm"
@@ -43,27 +42,6 @@ export default function Header({ showBack }: { showBack?: boolean }) {
           >
             <HelpCircle className="h-4 w-4" />
             <span className="hidden sm:inline">Справка</span>
-          </Button>
-          <Separator orientation="vertical" className="h-6" />
-          <Link
-            href="/profile"
-            className="hidden sm:inline-block text-sm text-muted-foreground border rounded-md px-3 py-1 hover:bg-muted transition-colors cursor-pointer"
-          >
-            ООО &quot;ГигаСтрой&quot;
-          </Link>
-          <Link href="/profile">
-            <Avatar className="h-8 w-8 cursor-pointer hover:opacity-80 transition-opacity">
-              <AvatarFallback className="bg-foreground text-background text-xs">ГС</AvatarFallback>
-            </Avatar>
-          </Link>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="gap-1.5 text-muted-foreground"
-            onClick={() => router.push("/")}
-          >
-            <LogOut className="h-4 w-4" />
-            <span className="hidden sm:inline">Выйти</span>
           </Button>
         </div>
       </div>
