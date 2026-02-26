@@ -1,8 +1,56 @@
-export default function Header() {
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, LogOut } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+
+export default function Header({ showBack }: { showBack?: boolean }) {
+  const router = useRouter();
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm">
-      <div className="container flex h-14 items-center">
-        {/* Header placeholder */}
+    <header className="sticky top-0 z-50 w-full border-b bg-background">
+      <div className="container flex h-14 items-center justify-between px-4 md:px-6">
+        <div className="flex items-center gap-3">
+          <Link href="/events" className="flex items-center gap-2 font-semibold">
+            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
+              <path d="M8 12l2 2 4-4" />
+            </svg>
+            AccredSystem
+          </Link>
+          {showBack && (
+            <>
+              <Separator orientation="vertical" className="h-6" />
+              <Link
+                href="/events"
+                className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                К списку мероприятий
+              </Link>
+            </>
+          )}
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="hidden text-sm text-muted-foreground sm:inline-block border rounded-md px-3 py-1">
+            ООО &quot;ГигаСтрой&quot;
+          </span>
+          <Avatar className="h-8 w-8">
+            <AvatarFallback className="bg-foreground text-background text-xs">ГС</AvatarFallback>
+          </Avatar>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="gap-1.5 text-muted-foreground"
+            onClick={() => router.push("/")}
+          >
+            <LogOut className="h-4 w-4" />
+            <span className="hidden sm:inline">Выйти</span>
+          </Button>
+        </div>
       </div>
     </header>
   );
