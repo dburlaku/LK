@@ -101,6 +101,36 @@ export default function ProfilePage() {
           </CardContent>
         </Card>
 
+        {/* Curator */}
+        <Card className="mb-6 border-blue-200 bg-blue-50/50">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <User className="h-5 w-5" />
+              Ваш куратор
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <div>
+                <p className="text-xs text-muted-foreground">ФИО</p>
+                <p className="text-sm font-medium">Иванова Мария Александровна</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground flex items-center gap-1">
+                  <Phone className="h-3 w-3" /> Телефон
+                </p>
+                <p className="text-sm font-medium">+7 (812) 600-00-01</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground flex items-center gap-1">
+                  <Mail className="h-3 w-3" /> Email
+                </p>
+                <p className="text-sm font-medium">v.mikhailova@drive-igora.ru</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Change Password */}
         <Card className="mb-6">
           <CardHeader>
