@@ -1,14 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, HelpCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 export default function Header({ showBack }: { showBack?: boolean }) {
-  const router = useRouter();
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container flex h-14 items-center justify-between px-4 md:px-6">
@@ -34,16 +30,6 @@ export default function Header({ showBack }: { showBack?: boolean }) {
           )}
         </div>
         <div className="flex items-center gap-3">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="gap-1.5 text-muted-foreground"
-            onClick={() => router.push("/help")}
-          >
-            <HelpCircle className="h-4 w-4" />
-            <span className="hidden sm:inline">Справка</span>
-          </Button>
-          <Separator orientation="vertical" className="h-6" />
           <Link
             href="/profile"
             className="hidden sm:inline-block text-sm text-muted-foreground border rounded-md px-3 py-1 hover:bg-muted transition-colors cursor-pointer"
