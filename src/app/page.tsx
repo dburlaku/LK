@@ -14,36 +14,6 @@ import {
 import { Label } from "@/components/ui/label";
 import { Lock, User } from "lucide-react";
 
-/* ------------------------------------------------------------------ */
-/*  SVG-заглушки — замените на реальные изображения, когда будут готовы:
- *    Логотип:  <Image src="/logo-igora-drive.svg" alt="Игора Драйв" ... />
- * ------------------------------------------------------------------ */
-
-function LogoPlaceholder({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 80 80"
-      className={className ?? "h-16 w-16"}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect width="80" height="80" rx="16" fill="#18181b" />
-      <rect x="4" y="4" width="72" height="72" rx="12" fill="none" stroke="#f97316" strokeWidth="2" />
-      <ellipse cx="40" cy="38" rx="22" ry="14" fill="none" stroke="#f97316" strokeWidth="2.5" />
-      <line x1="40" y1="24" x2="40" y2="52" stroke="#f97316" strokeWidth="1.5" strokeDasharray="3 2" />
-      <line x1="16" y1="30" x2="24" y2="30" stroke="#f97316" strokeWidth="1.5" opacity="0.6" />
-      <line x1="14" y1="38" x2="22" y2="38" stroke="#f97316" strokeWidth="1.5" opacity="0.8" />
-      <line x1="16" y1="46" x2="24" y2="46" stroke="#f97316" strokeWidth="1.5" opacity="0.6" />
-      <rect x="32" y="56" width="4" height="4" fill="#f97316" opacity="0.5" />
-      <rect x="40" y="56" width="4" height="4" fill="#f97316" opacity="0.5" />
-      <rect x="36" y="60" width="4" height="4" fill="#f97316" opacity="0.5" />
-      <rect x="44" y="60" width="4" height="4" fill="#f97316" opacity="0.5" />
-      <text x="40" y="76" textAnchor="middle" fill="#f97316" fontSize="6" fontFamily="sans-serif" fontWeight="700">
-        ИД
-      </text>
-    </svg>
-  );
-}
-
 export default function LoginPage() {
   const router = useRouter();
   const [login, setLogin] = useState("");
@@ -62,48 +32,32 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen">
       {/* ——— Левая колонка: брендинг ——— */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center bg-zinc-900 p-12 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center p-12 relative overflow-hidden" style={{ backgroundColor: "#9B3A6A" }}>
         {/* Decorative background elements */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 w-40 h-40 rounded-full bg-orange-500" />
-          <div className="absolute bottom-20 right-10 w-60 h-60 rounded-full bg-orange-500" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-orange-500" />
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-10 w-40 h-40 rounded-full bg-white" />
+          <div className="absolute bottom-20 right-10 w-60 h-60 rounded-full bg-white" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-white" />
         </div>
 
-        {/* Decorative lines */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-0 right-0 h-px bg-orange-500/10" />
-          <div className="absolute top-3/4 left-0 right-0 h-px bg-orange-500/10" />
+          <div className="absolute top-1/4 left-0 right-0 h-px bg-white/10" />
+          <div className="absolute top-3/4 left-0 right-0 h-px bg-white/10" />
         </div>
 
         <div className="relative z-10 flex flex-col items-center text-center">
-          <LogoPlaceholder className="h-24 w-24" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/LK/logo-igora-drive.svg" alt="Игора Драйв" className="h-48 w-48 rounded-2xl" />
 
-          <h1 className="mt-8 text-4xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-400">
-            ИГОРА ДРАЙВ
-          </h1>
-
-          <p className="mt-3 text-zinc-400 text-lg tracking-widest uppercase">
+          <p className="mt-8 text-white/80 text-lg tracking-widest uppercase">
             Аккредитация подрядчиков
           </p>
 
-          <div className="mt-6 w-32 h-0.5 bg-gradient-to-r from-orange-500 to-orange-400 opacity-60 rounded-full" />
+          <div className="mt-6 w-32 h-0.5 bg-white/40 rounded-full" />
 
-          <p className="mt-6 text-zinc-500 text-sm">
+          <p className="mt-6 text-white/50 text-sm">
             2026 &bull; Санкт-Петербург
           </p>
-
-          {/* Checkered pattern decoration */}
-          <div className="mt-10 flex gap-1 opacity-20">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className={`w-4 h-4 ${i % 2 === 0 ? "bg-orange-500" : "bg-transparent"}`} />
-            ))}
-          </div>
-          <div className="flex gap-1 opacity-20">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className={`w-4 h-4 ${i % 2 === 1 ? "bg-orange-500" : "bg-transparent"}`} />
-            ))}
-          </div>
         </div>
       </div>
 
@@ -112,7 +66,8 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           {/* Mobile-only logo */}
           <div className="flex justify-center mb-6 lg:hidden">
-            <LogoPlaceholder />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/LK/logo-igora-drive.svg" alt="Игора Драйв" className="h-20 w-20 rounded-xl" />
           </div>
 
           <Card className="shadow-lg">
@@ -161,7 +116,7 @@ export default function LoginPage() {
                     {error}
                   </div>
                 )}
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" style={{ backgroundColor: "#9B3A6A" }}>
                   Войти
                 </Button>
               </form>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" rx="16" fill="#9B3A6A"/>
+  <!-- Stylized "Игора" calligraphic text -->
+  <text x="200" y="230" text-anchor="middle" fill="white" font-family="Georgia, serif" font-size="120" font-style="italic" font-weight="700">Игора</text>
+  <!-- "Драйв" below -->
+  <text x="200" y="330" text-anchor="middle" fill="white" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="60" letter-spacing="8">Драйв</text>
+</svg>

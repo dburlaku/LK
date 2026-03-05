@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
-import { Calendar, Plus, Search, ArrowUpDown, Car, AlertTriangle, FileText } from "lucide-react";
+import { Calendar, Plus, Search, ArrowUpDown, Car, AlertTriangle, FileText, Copy, Check } from "lucide-react";
 import Header from "@/components/header";
 import SubmitApplicationDialog, { type NewApplicationData } from "@/components/submit-application-dialog";
 import ApplicationDetailDialog from "@/components/application-detail-dialog";
@@ -86,6 +86,15 @@ export default function EventDetailClient({ id }: { id: string }) {
   const [submitOpen, setSubmitOpen] = useState(false);
   const [detailApp, setDetailApp] = useState<Application | null>(null);
   const [revokeApp, setRevokeApp] = useState<Application | null>(null);
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  const copyFormLink = useCallback(() => {
+    const url = `${window.location.origin}/LK/events/${id}/`;
+    navigator.clipboard.writeText(url).then(() => {
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 2000);
+    });
+  }, [id]);
 
   const handleNewApplications = useCallback(
     (newApps: NewApplicationData[]) => {
@@ -221,23 +230,20 @@ export default function EventDetailClient({ id }: { id: string }) {
       <main className="container max-w-6xl px-4 py-8 md:px-6">
         {/* Event header */}
         <div className="flex items-start justify-between gap-4">
-          <div className="flex items-start gap-4">
-            {/* Event logo placeholder */}
-            <div className="shrink-0 h-16 w-16 rounded-lg border bg-muted flex items-center justify-center">
-              <svg viewBox="0 0 48 48" className="h-10 w-10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="4" y="8" width="8" height="8" rx="1" fill="currentColor" opacity="0.2" />
-                <rect x="12" y="8" width="8" height="8" rx="1" fill="currentColor" opacity="0.4" />
-                <rect x="20" y="8" width="8" height="8" rx="1" fill="currentColor" opacity="0.2" />
-                <rect x="4" y="16" width="8" height="8" rx="1" fill="currentColor" opacity="0.4" />
-                <rect x="12" y="16" width="8" height="8" rx="1" fill="currentColor" opacity="0.2" />
-                <rect x="20" y="16" width="8" height="8" rx="1" fill="currentColor" opacity="0.4" />
-                <rect x="4" y="24" width="8" height="8" rx="1" fill="currentColor" opacity="0.2" />
-                <rect x="12" y="24" width="8" height="8" rx="1" fill="currentColor" opacity="0.4" />
-                <rect x="20" y="24" width="8" height="8" rx="1" fill="currentColor" opacity="0.2" />
-                <path d="M34 12L42 20L34 28" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
-                <text x="16" y="42" textAnchor="middle" fill="currentColor" fontSize="7" fontFamily="sans-serif" fontWeight="700" opacity="0.4">LOGO</text>
-              </svg>
-            </div>
+          <div className="flex items-start gap-5">
+            {/* Event logo */}
+            {event.logo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={event.logo}
+                alt={event.name}
+                className="shrink-0 h-24 w-40 rounded-lg object-cover"
+              />
+            ) : (
+              <div className="shrink-0 h-24 w-40 rounded-lg border bg-muted flex items-center justify-center">
+                <span className="text-xs text-muted-foreground">LOGO</span>
+              </div>
+            )}
             <div>
               <h1 className="text-2xl font-bold">{event.name}</h1>
               <div className="mt-1 flex items-center gap-3">
@@ -255,6 +261,21 @@ export default function EventDetailClient({ id }: { id: string }) {
                 >
                   {event.status}
                 </Badge>
+              </div>
+              {/* Memo link + Copy link */}
+              <div className="mt-2 flex items-center gap-2 flex-wrap">
+                {accredInfo && (
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href={`/events/${id}/memo`}>
+                      <FileText className="mr-1.5 h-4 w-4" />
+                      Памятка для участника
+                    </Link>
+                  </Button>
+                )}
+                <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground" onClick={copyFormLink}>
+                  {linkCopied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
+                  {linkCopied ? "Скопировано" : "Скопировать ссылку"}
+                </Button>
               </div>
             </div>
           </div>
@@ -283,18 +304,6 @@ export default function EventDetailClient({ id }: { id: string }) {
             </div>
           ))}
         </div>
-
-        {/* Link to memo page */}
-        {accredInfo && (
-          <div className="mt-6">
-            <Button variant="outline" asChild>
-              <Link href={`/events/${id}/memo`}>
-                <FileText className="mr-1.5 h-4 w-4" />
-                Памятка для участника мероприятия
-              </Link>
-            </Button>
-          </div>
-        )}
 
         {/* Applications table */}
         <div className="mt-8">

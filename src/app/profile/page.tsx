@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Building2, Phone, Mail, User, KeyRound, LogOut } from "lucide-react";
+import { Building2, Phone, Mail, User, KeyRound, LogOut, ArrowLeft } from "lucide-react";
 import Header from "@/components/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -56,7 +56,13 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="container max-w-2xl px-4 py-8 md:px-6">
-        <h1 className="mb-6 text-3xl font-bold">Профиль компании</h1>
+        <div className="mb-6 flex items-center gap-4">
+          <Button variant="outline" size="sm" onClick={() => router.back()}>
+            <ArrowLeft className="mr-1.5 h-4 w-4" />
+            Назад
+          </Button>
+          <h1 className="text-3xl font-bold">Профиль компании</h1>
+        </div>
 
         {/* Company Info */}
         <Card className="mb-6">

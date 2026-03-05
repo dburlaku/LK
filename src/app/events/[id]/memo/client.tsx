@@ -1,6 +1,7 @@
 "use client";
 
-import { MapPin, Clock, ShieldCheck, Users, ParkingCircle, FileDown, Mail } from "lucide-react";
+import { MapPin, Clock, ShieldCheck, Users, ParkingCircle, FileDown, Mail, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -49,8 +50,18 @@ export default function MemoClient({ id }: { id: string }) {
     <div className="min-h-screen bg-background">
       <Header showBack />
       <main className="container max-w-3xl px-4 py-8 md:px-6">
-        <h1 className="text-2xl font-bold mb-1">Памятка для участника мероприятия</h1>
-        <p className="text-muted-foreground mb-6">{event.name}</p>
+        <div className="mb-6 flex items-center gap-4">
+          <Button variant="outline" size="sm" asChild>
+            <Link href={`/events/${id}`}>
+              <ArrowLeft className="mr-1.5 h-4 w-4" />
+              Назад
+            </Link>
+          </Button>
+          <div>
+            <h1 className="text-2xl font-bold">Памятка для участника мероприятия</h1>
+            <p className="text-muted-foreground">{event.name}</p>
+          </div>
+        </div>
 
         <Card className="border-blue-200 bg-blue-50/50">
           <CardHeader className="pb-3">

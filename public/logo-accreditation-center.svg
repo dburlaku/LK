@@ -1,0 +1,11 @@
+<svg width="600" height="120" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M40 90L65 25H85L110 90H95L88 72H62L55 90H40ZM66 62H84L75 38L66 62Z" fill="#A30000"/>
+  <path d="M105 45L130 45L125 55L100 55L105 45Z" fill="#A30000"/>
+  <path d="M115 30L140 30L135 40L110 40L115 30Z" fill="#333333"/>
+  <line x1="160" y1="20" x2="160" y2="100" stroke="#333333" stroke-width="2"/>
+  <text x="180" y="55" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#A30000">IGORA</text>
+  <text x="290" y="55" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#333333">DRIVE</text>
+  <text x="180" y="85" font-family="Arial, sans-serif" font-size="18" font-weight="normal" fill="#333333" letter-spacing="1">ACCREDITATION CENTER</text>
+  <text x="440" y="70" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#666666">ЦЕНТР</text>
+  <text x="440" y="85" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#666666">АККРЕДИТАЦИИ</text>
+</svg>
