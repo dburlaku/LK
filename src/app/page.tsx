@@ -47,7 +47,7 @@ export default function LoginPage() {
 
         <div className="relative z-10 flex flex-col items-center text-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/LK/logo-igora-drive.svg" alt="Игора Драйв" className="h-48 w-48 rounded-2xl" />
+          <img src="/LK/logo-igora-pink.png" alt="Игора Драйв" className="h-48 w-48 rounded-2xl" />
 
           <p className="mt-8 text-white/80 text-lg tracking-widest uppercase">
             Аккредитация подрядчиков
@@ -67,7 +67,7 @@ export default function LoginPage() {
           {/* Mobile-only logo */}
           <div className="flex justify-center mb-6 lg:hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/LK/logo-igora-drive.svg" alt="Игора Драйв" className="h-20 w-20 rounded-xl" />
+            <img src="/LK/logo-igora-pink.png" alt="Игора Драйв" className="h-20 w-20 rounded-xl" />
           </div>
 
           <Card className="shadow-lg">
