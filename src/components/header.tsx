@@ -31,7 +31,7 @@ export default function Header({ showBack }: { showBack?: boolean }) {
             href="/profile"
             className="hidden sm:inline-block text-sm text-muted-foreground border rounded-md px-3 py-1 hover:bg-muted transition-colors cursor-pointer"
           >
-            ООО &quot;ГигаСтрой&quot;
+            ООО &quot;ГигаСтрой&quot; · ИНН 7812345678
           </Link>
         </div>
       </div>
