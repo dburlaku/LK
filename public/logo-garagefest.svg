@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a3e"/>
+      <stop offset="100%" stop-color="#3d1a3e"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="200" rx="12" fill="url(#bg)"/>
+  <!-- GARAGE -->
+  <text x="200" y="90" text-anchor="middle" fill="white" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="56" letter-spacing="4">GARAGE</text>
+  <!-- FEST 2026 -->
+  <text x="145" y="155" text-anchor="middle" fill="white" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="56" letter-spacing="4">FEST</text>
+  <text x="320" y="155" text-anchor="middle" fill="#6366f1" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="40">2026</text>
+  <!-- ® -->
+  <circle cx="255" cy="120" r="8" fill="none" stroke="white" stroke-width="1.5"/>
+  <text x="255" y="125" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="700">R</text>
+</svg>

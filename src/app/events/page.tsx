@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Calendar, ArrowRight } from "lucide-react";
+import { Calendar } from "lucide-react";
 import Header from "@/components/header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { mockEvents, type Event } from "@/lib/mock-data";
 
@@ -14,49 +13,59 @@ function EventCard({ event }: { event: Event }) {
   const isPast = event.status === "Прошедшее";
 
   return (
-    <Card className="transition-shadow hover:shadow-md">
-      <CardContent className="p-6">
-        <div className="flex items-start justify-between gap-4">
-          <div className="space-y-1">
-            <h3 className="text-lg font-semibold">{event.name}</h3>
-            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <Calendar className="h-4 w-4" />
-              {event.date}
+    <Link href={`/events/${event.id}`} className="block">
+      <Card className="transition-shadow hover:shadow-md cursor-pointer">
+        <CardContent className="p-6">
+          <div className="flex items-start gap-4">
+            {/* Event logo */}
+            {event.logo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={event.logo}
+                alt={event.name}
+                className="shrink-0 h-20 w-32 rounded-lg object-cover"
+              />
+            ) : (
+              <div className="shrink-0 h-20 w-32 rounded-lg border bg-muted flex items-center justify-center">
+                <span className="text-xs text-muted-foreground">LOGO</span>
+              </div>
+            )}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between gap-4">
+                <div className="space-y-1">
+                  <h3 className="text-lg font-semibold">{event.name}</h3>
+                  <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4" />
+                    {event.date}
+                  </div>
+                </div>
+                <Badge
+                  variant={isPast ? "secondary" : "outline"}
+                  className={
+                    isPast
+                      ? ""
+                      : "border-green-200 bg-green-50 text-green-700"
+                  }
+                >
+                  {event.status}
+                </Badge>
+              </div>
+
+              <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-1 text-sm">
+                {event.quotas.map((q) => (
+                  <div key={q.type} className="text-muted-foreground">
+                    {q.type}:{" "}
+                    <span className="font-medium text-foreground">
+                      {q.current} / {q.max}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-          <Badge
-            variant={isPast ? "secondary" : "outline"}
-            className={
-              isPast
-                ? ""
-                : "border-green-200 bg-green-50 text-green-700"
-            }
-          >
-            {event.status}
-          </Badge>
-        </div>
-
-        <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-1 text-sm">
-          {event.quotas.map((q) => (
-            <div key={q.type} className="text-muted-foreground">
-              {q.type}:{" "}
-              <span className="font-medium text-foreground">
-                {q.current} / {q.max}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-4">
-          <Button asChild variant={isPast ? "outline" : "default"}>
-            <Link href={`/events/${event.id}`}>
-              {isPast ? "Посмотреть заявки" : "Перейти к заявкам"}
-              <ArrowRight className="ml-1.5 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }
 

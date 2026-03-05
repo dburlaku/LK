@@ -22,6 +22,7 @@ export interface Event {
   date: string;
   status: EventStatus;
   quotas: Quota[];
+  logo?: string;
 }
 
 export interface VehicleInfo {
@@ -96,6 +97,7 @@ export const mockEvents: Event[] = [
     name: 'Фестиваль «Мото Драйв» 2026',
     date: "6–7 июня 2026",
     status: "Актуальное",
+    logo: "/LK/logo-motodrive.svg",
     quotas: [
       { type: "Организатор", current: 1, max: 4 },
       { type: "Технический персонал", current: 5, max: 15 },
@@ -107,6 +109,7 @@ export const mockEvents: Event[] = [
     name: "GARAGE FEST Игора Драйв 2026",
     date: "18–19 июля 2026",
     status: "Актуальное",
+    logo: "/LK/logo-garagefest.svg",
     quotas: [
       { type: "Организатор", current: 2, max: 5 },
       { type: "Технический персонал", current: 12, max: 20 },
@@ -118,6 +121,7 @@ export const mockEvents: Event[] = [
     name: "GARAGE FEST Игора Драйв 2025",
     date: "2025",
     status: "Прошедшее",
+    logo: "/LK/logo-garagefest.svg",
     quotas: [
       { type: "Организатор", current: 5, max: 5 },
       { type: "Технический персонал", current: 10, max: 10 },
