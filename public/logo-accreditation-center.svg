@@ -7,7 +7,6 @@
   <rect x="130" y="15" width="2" height="70" fill="#333333"/>
   <g id="text-block" font-family="Arial Black, sans-serif" font-weight="900">
     <text x="145" y="45" font-size="28" fill="#1A1A1A" letter-spacing="-1">IGORA DRIVE</text>
-
     <text x="145" y="78" font-size="22" fill="#333333" font-family="Arial Narrow, sans-serif" font-weight="bold">ЦЕНТР АККРЕДИТАЦИИ</text>
   </g>
 </svg>
