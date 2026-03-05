@@ -184,11 +184,23 @@ function SingleApplicationForm({
   quotas,
   onSubmit,
   onCancel,
+  eventId,
 }: {
   quotas: Quota[];
   onSubmit: (apps: NewApplicationData[]) => void;
   onCancel: () => void;
+  eventId?: string;
 }) {
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  const copyFormLink = useCallback(() => {
+    if (!eventId) return;
+    const url = `${window.location.origin}/LK/events/${eventId}/`;
+    navigator.clipboard.writeText(url).then(() => {
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 2000);
+    });
+  }, [eventId]);
   const [fullName, setFullName] = useState("");
   const [passport, setPassport] = useState("");
   const [type, setType] = useState<string>("");
@@ -333,9 +345,17 @@ function SingleApplicationForm({
         )}
       </div>
 
-      <div className="flex justify-end gap-2 pt-2">
-        <Button variant="outline" onClick={onCancel}>Отмена</Button>
-        <Button onClick={handleSubmit}>Отправить заявку</Button>
+      <div className="flex items-center justify-between gap-2 pt-2">
+        {eventId ? (
+          <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground" onClick={copyFormLink}>
+            {linkCopied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
+            {linkCopied ? "Скопировано" : "Скопировать ссылку"}
+          </Button>
+        ) : <div />}
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={onCancel}>Отмена</Button>
+          <Button onClick={handleSubmit}>Отправить заявку</Button>
+        </div>
       </div>
     </div>
   );
@@ -599,35 +619,17 @@ export default function SubmitApplicationDialog({
   onSubmit: (apps: NewApplicationData[]) => void;
   eventId?: string;
 }) {
-  const [linkCopied, setLinkCopied] = useState(false);
   const handleCancel = () => onOpenChange(false);
   const handleSubmit = (apps: NewApplicationData[]) => {
     onSubmit(apps);
     onOpenChange(false);
   };
 
-  const copyFormLink = useCallback(() => {
-    if (!eventId) return;
-    const url = `${window.location.origin}/LK/events/${eventId}/`;
-    navigator.clipboard.writeText(url).then(() => {
-      setLinkCopied(true);
-      setTimeout(() => setLinkCopied(false), 2000);
-    });
-  }, [eventId]);
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <div className="flex items-center justify-between gap-2">
-            <DialogTitle>Подача заявки на аккредитацию</DialogTitle>
-            {eventId && (
-              <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground shrink-0 mr-6" onClick={copyFormLink}>
-                {linkCopied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
-                {linkCopied ? "Скопировано" : "Скопировать ссылку"}
-              </Button>
-            )}
-          </div>
+          <DialogTitle>Подача заявки на аккредитацию</DialogTitle>
           <DialogDescription>Добавьте сотрудников для аккредитации на мероприятие.</DialogDescription>
         </DialogHeader>
         <Tabs defaultValue="single">
@@ -637,7 +639,7 @@ export default function SubmitApplicationDialog({
             <TabsTrigger value="import">Импорт XLS</TabsTrigger>
           </TabsList>
           <TabsContent value="single" className="mt-4">
-            <SingleApplicationForm quotas={quotas} onSubmit={handleSubmit} onCancel={handleCancel} />
+            <SingleApplicationForm quotas={quotas} onSubmit={handleSubmit} onCancel={handleCancel} eventId={eventId} />
           </TabsContent>
           <TabsContent value="multiple" className="mt-4">
             <MultipleApplicationForm quotas={quotas} onSubmit={handleSubmit} onCancel={handleCancel} />

@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
-import { Calendar, Plus, Search, ArrowUpDown, Car, AlertTriangle, FileText, Copy, Check } from "lucide-react";
+import { Calendar, Plus, Search, ArrowUpDown, Car, AlertTriangle, FileText } from "lucide-react";
 import Header from "@/components/header";
 import SubmitApplicationDialog, { type NewApplicationData } from "@/components/submit-application-dialog";
 import ApplicationDetailDialog from "@/components/application-detail-dialog";
@@ -86,15 +86,6 @@ export default function EventDetailClient({ id }: { id: string }) {
   const [submitOpen, setSubmitOpen] = useState(false);
   const [detailApp, setDetailApp] = useState<Application | null>(null);
   const [revokeApp, setRevokeApp] = useState<Application | null>(null);
-  const [linkCopied, setLinkCopied] = useState(false);
-
-  const copyFormLink = useCallback(() => {
-    const url = `${window.location.origin}/LK/events/${id}/`;
-    navigator.clipboard.writeText(url).then(() => {
-      setLinkCopied(true);
-      setTimeout(() => setLinkCopied(false), 2000);
-    });
-  }, [id]);
 
   const handleNewApplications = useCallback(
     (newApps: NewApplicationData[]) => {
@@ -262,21 +253,17 @@ export default function EventDetailClient({ id }: { id: string }) {
                   {event.status}
                 </Badge>
               </div>
-              {/* Memo link + Copy link */}
-              <div className="mt-2 flex items-center gap-2 flex-wrap">
-                {accredInfo && (
+              {/* Memo link */}
+              {accredInfo && (
+                <div className="mt-2">
                   <Button variant="outline" size="sm" asChild>
                     <Link href={`/events/${id}/memo`}>
                       <FileText className="mr-1.5 h-4 w-4" />
                       Памятка для участника
                     </Link>
                   </Button>
-                )}
-                <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground" onClick={copyFormLink}>
-                  {linkCopied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
-                  {linkCopied ? "Скопировано" : "Скопировать ссылку"}
-                </Button>
-              </div>
+                </div>
+              )}
             </div>
           </div>
           {event.status === "Актуальное" && (
