@@ -464,6 +464,7 @@ export default function EventDetailClient({ id }: { id: string }) {
         onOpenChange={setSubmitOpen}
         quotas={event.quotas}
         onSubmit={handleNewApplications}
+        eventId={id}
       />
 
       {/* Application detail dialog */}

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Plus, FileSpreadsheet, Download, Upload, X, HelpCircle, Car } from "lucide-react";
+import { useState, useCallback } from "react";
+import { Plus, FileSpreadsheet, Download, Upload, X, HelpCircle, Car, Copy, Check } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -591,23 +591,43 @@ export default function SubmitApplicationDialog({
   onOpenChange,
   quotas,
   onSubmit,
+  eventId,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   quotas: Quota[];
   onSubmit: (apps: NewApplicationData[]) => void;
+  eventId?: string;
 }) {
+  const [linkCopied, setLinkCopied] = useState(false);
   const handleCancel = () => onOpenChange(false);
   const handleSubmit = (apps: NewApplicationData[]) => {
     onSubmit(apps);
     onOpenChange(false);
   };
 
+  const copyFormLink = useCallback(() => {
+    if (!eventId) return;
+    const url = `${window.location.origin}/LK/events/${eventId}/`;
+    navigator.clipboard.writeText(url).then(() => {
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 2000);
+    });
+  }, [eventId]);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Подача заявки на аккредитацию</DialogTitle>
+          <div className="flex items-center justify-between gap-2">
+            <DialogTitle>Подача заявки на аккредитацию</DialogTitle>
+            {eventId && (
+              <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground shrink-0 mr-6" onClick={copyFormLink}>
+                {linkCopied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
+                {linkCopied ? "Скопировано" : "Скопировать ссылку"}
+              </Button>
+            )}
+          </div>
           <DialogDescription>Добавьте сотрудников для аккредитации на мероприятие.</DialogDescription>
         </DialogHeader>
         <Tabs defaultValue="single">
