@@ -33,8 +33,6 @@ export default function Header({ showBack }: { showBack?: boolean }) {
           >
             ООО &quot;ГигаСтрой&quot; · ИНН 7812345678
           </Link>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/LK/logo-igora-pink.png" alt="Игора Драйв" className="h-8" />
         </div>
       </div>
     </header>
