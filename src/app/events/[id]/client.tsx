@@ -228,7 +228,7 @@ export default function EventDetailClient({ id }: { id: string }) {
               <img
                 src={event.logo}
                 alt={event.name}
-                className="shrink-0 h-24 w-40 rounded-lg object-cover"
+                className="shrink-0 h-24 w-40 rounded-lg object-contain"
               />
             ) : (
               <div className="shrink-0 h-24 w-40 rounded-lg border bg-muted flex items-center justify-center">

@@ -23,7 +23,7 @@ function EventCard({ event }: { event: Event }) {
               <img
                 src={event.logo}
                 alt={event.name}
-                className="shrink-0 h-20 w-32 rounded-lg object-cover"
+                className="shrink-0 h-20 w-32 rounded-lg object-contain"
               />
             ) : (
               <div className="shrink-0 h-20 w-32 rounded-lg border bg-muted flex items-center justify-center">
